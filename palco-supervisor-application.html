@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adil Khodabacchus — Supervisor Application · Palco Mauritius</title>
+<meta name="description" content="Application for the Supervisor position at Palco Mauritius by Adil Khodabacchus.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --screed:#ECE9E3;      /* warm concrete grey */
+    --paper:#F6F4F0;
+    --ink:#1D2023;         /* charcoal */
+    --ink-60:#5C6066;
+    --orange:#E8500A;      /* safety orange */
+    --membrane:#39525E;    /* blue-grey membrane */
+    --line:#C9C4BB;
+    --radius:10px;
+    --maxw:1080px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--screed);
+    color:var(--ink);
+    font-family:'Archivo',system-ui,sans-serif;
+    font-variation-settings:'wdth' 100;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .mono{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-60)}
+  a{color:inherit}
+  :focus-visible{outline:3px solid var(--orange);outline-offset:3px;border-radius:4px}
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+
+  /* ---------- top bar ---------- */
+  header.top{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:20px 0;border-bottom:1px solid var(--line);
+  }
+  .top .brand{font-weight:800;font-variation-settings:'wdth' 118;letter-spacing:.02em;font-size:1rem}
+  .top .ref{text-align:right}
+
+  /* ---------- hero ---------- */
+  .hero{padding:88px 0 72px}
+  .hero .eyebrow{color:var(--orange);margin-bottom:20px;display:block}
+  h1{
+    font-weight:900;font-variation-settings:'wdth' 120;
+    font-size:clamp(2.5rem,7vw,4.6rem);
+    line-height:1.02;letter-spacing:-.015em;
+    max-width:16ch;
+  }
+  h1 .accent{color:var(--orange)}
+  .hero p.lede{
+    margin-top:28px;max-width:56ch;font-size:1.12rem;color:var(--ink);
+  }
+  .hero .cta-row{margin-top:36px;display:flex;gap:14px;flex-wrap:wrap}
+  .btn{
+    display:inline-block;padding:14px 26px;border-radius:999px;
+    font-weight:700;font-size:.95rem;text-decoration:none;
+    border:2px solid var(--ink);transition:transform .15s ease, background .15s ease,color .15s ease;
+  }
+  .btn.primary{background:var(--ink);color:var(--paper)}
+  .btn.primary:hover{background:var(--orange);border-color:var(--orange);transform:translateY(-2px)}
+  .btn.ghost:hover{background:var(--ink);color:var(--paper);transform:translateY(-2px)}
+
+  /* ---------- section scaffolding ---------- */
+  section{padding:76px 0;border-top:1px solid var(--line)}
+  .sec-head{display:flex;align-items:baseline;gap:18px;margin-bottom:40px;flex-wrap:wrap}
+  h2{font-weight:800;font-variation-settings:'wdth' 115;font-size:clamp(1.6rem,3.4vw,2.3rem);letter-spacing:-.01em}
+
+  /* ---------- layer stack signature ---------- */
+  .stack-grid{display:grid;grid-template-columns:minmax(300px,460px) 1fr;gap:56px;align-items:start}
+  .layers{display:flex;flex-direction:column;gap:0;perspective:900px}
+  .layer{
+    border:2px solid var(--ink);
+    padding:20px 22px;cursor:pointer;background:var(--paper);
+    display:flex;justify-content:space-between;align-items:center;gap:12px;
+    transition:transform .2s ease, background .2s ease;
+    text-align:left;width:100%;font:inherit;color:inherit;
+  }
+  .layer + .layer{margin-top:-2px}
+  .layer:first-child{border-radius:var(--radius) var(--radius) 0 0}
+  .layer:last-child{border-radius:0 0 var(--radius) var(--radius)}
+  .layer .l-name{font-weight:800;font-variation-settings:'wdth' 112;font-size:1.02rem}
+  .layer .l-tag{font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-60);white-space:nowrap}
+  .layer:hover{transform:translateX(6px)}
+  .layer[aria-selected="true"]{background:var(--ink);color:var(--paper);transform:translateX(10px)}
+  .layer[aria-selected="true"] .l-tag{color:var(--orange)}
+  .layer .swatch{width:14px;height:14px;border-radius:3px;flex:none;margin-right:14px}
+
+  .layer-detail{
+    background:var(--paper);border:2px solid var(--ink);border-radius:var(--radius);
+    padding:34px 32px;min-height:280px;position:relative;overflow:hidden;
+  }
+  .layer-detail::before{
+    content:"";position:absolute;left:0;top:0;bottom:0;width:8px;background:var(--orange);
+    transition:background .25s ease;
+  }
+  .layer-detail[data-color="membrane"]::before{background:var(--membrane)}
+  .layer-detail[data-color="ink"]::before{background:var(--ink)}
+  .layer-detail[data-color="grey"]::before{background:var(--ink-60)}
+  .layer-detail h3{font-weight:800;font-size:1.4rem;margin-bottom:6px;font-variation-settings:'wdth' 112}
+  .layer-detail .mono{display:block;margin-bottom:18px}
+  .layer-detail p{color:var(--ink);max-width:52ch}
+  .layer-detail ul{list-style:none;margin-top:18px}
+  .layer-detail li{padding:9px 0;border-top:1px dashed var(--line);font-size:.96rem}
+  .layer-detail li strong{font-weight:700}
+  .stack-caption{margin-top:22px;font-size:.9rem;color:var(--ink-60);max-width:44ch}
+
+  /* ---------- responsibilities match ---------- */
+  .match{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+  .match-card{
+    background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);
+    padding:28px;transition:border-color .2s ease, transform .2s ease;
+  }
+  .match-card:hover{border-color:var(--ink);transform:translateY(-3px)}
+  .match-card .req{color:var(--orange);margin-bottom:14px;display:block}
+  .match-card h3{font-size:1.12rem;font-weight:800;margin-bottom:10px;font-variation-settings:'wdth' 110}
+  .match-card p{font-size:.95rem;color:var(--ink)}
+
+  /* ---------- the edge ---------- */
+  .edge{background:var(--ink);color:var(--paper);border-radius:calc(var(--radius) + 6px);padding:56px 48px}
+  .edge .mono{color:#9BA1A8}
+  .edge h2{color:var(--paper);margin-bottom:22px}
+  .edge p{max-width:62ch;color:#D7D9DC}
+  .edge .proof{
+    margin-top:30px;display:flex;gap:14px;flex-wrap:wrap;
+  }
+  .chip{
+    font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;
+    border:1px solid #4A4F55;border-radius:999px;padding:9px 16px;color:#E8E4DC;
+  }
+  .chip.hot{border-color:var(--orange);color:var(--orange)}
+
+  /* ---------- record ---------- */
+  .record{display:grid;grid-template-columns:1fr;gap:0}
+  .rec-row{
+    display:grid;grid-template-columns:150px 1fr;gap:26px;
+    padding:24px 0;border-top:1px dashed var(--line);
+  }
+  .rec-row:first-child{border-top:none}
+  .rec-when{font-family:'IBM Plex Mono',monospace;font-size:.75rem;letter-spacing:.08em;color:var(--ink-60);padding-top:4px}
+  .rec-row h3{font-size:1.05rem;font-weight:800;font-variation-settings:'wdth' 110}
+  .rec-row p{font-size:.94rem;color:var(--ink-60);margin-top:4px;max-width:64ch}
+
+  /* ---------- contact ---------- */
+  .contact{padding-bottom:110px}
+  .contact-card{
+    border:2px solid var(--ink);border-radius:calc(var(--radius) + 6px);
+    background:var(--paper);padding:52px 48px;
+    display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:center;
+  }
+  .contact h2{margin-bottom:14px}
+  .contact p{max-width:44ch;color:var(--ink-60)}
+  .contact-links{display:flex;flex-direction:column;gap:14px}
+  .contact-links a{
+    text-decoration:none;font-weight:700;font-size:1.05rem;
+    padding:16px 20px;border:1px solid var(--line);border-radius:var(--radius);
+    display:flex;justify-content:space-between;align-items:center;gap:10px;
+    transition:border-color .15s ease, transform .15s ease;
+    background:var(--screed);
+  }
+  .contact-links a:hover{border-color:var(--orange);transform:translateX(4px)}
+  .contact-links .arrow{color:var(--orange)}
+
+  footer{border-top:1px solid var(--line);padding:26px 0 60px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+  /* ---------- reveal ---------- */
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease, transform .6s ease}
+  .reveal.in{opacity:1;transform:none}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto}
+    .reveal{opacity:1;transform:none;transition:none}
+    .layer,.match-card,.btn,.contact-links a{transition:none}
+  }
+
+  /* ---------- responsive ---------- */
+  @media (max-width:860px){
+    .stack-grid{grid-template-columns:1fr}
+    .match{grid-template-columns:1fr}
+    .contact-card{grid-template-columns:1fr;padding:36px 26px}
+    .edge{padding:40px 26px}
+    .rec-row{grid-template-columns:1fr;gap:6px}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand">ADIL&nbsp;KHODABACCHUS</div>
+    <div class="ref mono">Application · Supervisor<br>Palco Mauritius · 2026</div>
+  </header>
+
+  <!-- HERO -->
+  <div class="hero">
+    <span class="eyebrow mono">For the attention of the Palco recruitment team</span>
+    <h1>A supervisor built the way you build a floor — <span class="accent">in layers.</span></h1>
+    <p class="lede">Hi, I'm Adil. I currently run day-to-day operations for a multi-team services company in Rose Hill — scheduling crews, moving material, keeping clients calm and projects on time. This page is my application for your Supervisor vacancy, built by me, for you, because I think Palco deserves more than a PDF in an inbox.</p>
+    <div class="cta-row">
+      <a class="btn primary" href="#layers">See what I'm made of</a>
+      <a class="btn ghost" href="#contact">Get in touch</a>
+    </div>
+  </div>
+
+  <!-- LAYER STACK -->
+  <section id="layers" class="reveal">
+    <div class="sec-head">
+      <span class="mono">Cross-section</span>
+      <h2>Every good floor is a system. So is a good supervisor.</h2>
+    </div>
+    <div class="stack-grid">
+      <div>
+        <div class="layers" role="tablist" aria-label="Skill layers">
+          <button class="layer" role="tab" aria-selected="true" data-key="finish">
+            <span style="display:flex;align-items:center"><span class="swatch" style="background:var(--orange)"></span><span class="l-name">Finish — Innovation &amp; IT</span></span>
+            <span class="l-tag">Top layer</span>
+          </button>
+          <button class="layer" role="tab" aria-selected="false" data-key="membrane">
+            <span style="display:flex;align-items:center"><span class="swatch" style="background:var(--membrane)"></span><span class="l-name">Membrane — Leadership</span></span>
+            <span class="l-tag">Protects everything</span>
+          </button>
+          <button class="layer" role="tab" aria-selected="false" data-key="screed">
+            <span style="display:flex;align-items:center"><span class="swatch" style="background:var(--ink-60)"></span><span class="l-name">Screed — Logistics</span></span>
+            <span class="l-tag">Keeps it level</span>
+          </button>
+          <button class="layer" role="tab" aria-selected="false" data-key="substrate">
+            <span style="display:flex;align-items:center"><span class="swatch" style="background:var(--ink)"></span><span class="l-name">Substrate — Discipline</span></span>
+            <span class="l-tag">Load-bearing</span>
+          </button>
+        </div>
+        <p class="stack-caption">Tap each layer. A floor fails if any one of them is weak — a supervisor is no different.</p>
+      </div>
+
+      <div class="layer-detail" id="layerDetail" data-color="orange" role="tabpanel">
+        <span class="mono" id="ldTag">Top layer · What people see first</span>
+        <h3 id="ldTitle">Finish — Innovation &amp; IT</h3>
+        <p id="ldBody">A BSc (Hons) in Software Engineering means I don't just use digital tools — I build them. Reporting dashboards, automated invoicing systems, live project trackers. Site paperwork that reaches the Manager the same day, not next week. This website is a small sample: I made it specifically for this application.</p>
+        <ul id="ldList">
+          <li><strong>Built and deployed</strong> an invoice management web app currently in use in operations</li>
+          <li><strong>Advanced Excel</strong> — costing sheets, comparison analyses, commercial pricing models</li>
+          <li><strong>Digital-first reporting</strong> — photos, updates and daily logs, structured and on time</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- MATCH TO THE POSTING -->
+  <section class="reveal">
+    <div class="sec-head">
+      <span class="mono">Your posting, point by point</span>
+      <h2>You asked. Here's the evidence.</h2>
+    </div>
+    <div class="match">
+      <div class="match-card">
+        <span class="req mono">Managing &amp; leading site teams</span>
+        <h3>I already do this, daily.</h3>
+        <p>At SAI Vision Services I manage and supervise multiple operational teams at once — plumbing, electrical, cargo lift servicing, gate installations — keeping standards high across corporate and VIP clients who don't accept excuses.</p>
+      </div>
+      <div class="match-card">
+        <span class="req mono">Transport &amp; logistics</span>
+        <h3>Vehicles, vendors, timing.</h3>
+        <p>Through AKB Contracting I coordinate deliveries, vendor sourcing and crew movement across sites. I hold a valid driving licence and I'm a MITD-certified forklift operator — I can move material myself when it saves the day.</p>
+      </div>
+      <div class="match-card">
+        <span class="req mono">Coordinating site operations</span>
+        <h3>Several sites, one head.</h3>
+        <p>My routine is juggling schedules, procurement and last-minute changes without letting a single client feel the turbulence. Equipment ready, teams briefed, setups checked — accurately and on time, every time.</p>
+      </div>
+      <div class="match-card">
+        <span class="req mono">Reporting to the Manager</span>
+        <h3>Reports you can actually rely on.</h3>
+        <p>Six months as a Night Auditor at RIU Hotels sharpened my reporting discipline: reconciliations, discrepancy tracking, end-of-day reports handled with total confidentiality. Your Manager will always know exactly where a project stands.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE EDGE -->
+  <section class="reveal">
+    <div class="edge">
+      <span class="mono">The honest pitch</span>
+      <h2>Most supervisors run sites. I want to upgrade how yours run.</h2>
+      <p>Palco doesn't market itself like a traditional company — your work in flooring and waterproofing is modern, and your image is too. I'm applying because I fit that: young, hands-on, technically sharp, and comfortable being the bridge between the crew on the ground and the systems in the office. Give me a site and I'll run it. Give me six months and I'll hand you back a smoother way of running all of them.</p>
+      <div class="proof">
+        <span class="chip hot">This page = proof of initiative</span>
+        <span class="chip">BSc (Hons) Software Engineering</span>
+        <span class="chip">Ops Manager · multi-team</span>
+        <span class="chip">Forklift certified · MITD</span>
+        <span class="chip">Valid driving licence</span>
+        <span class="chip">EN / FR working proficiency</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- RECORD -->
+  <section class="reveal">
+    <div class="sec-head">
+      <span class="mono">Track record</span>
+      <h2>Where the experience comes from</h2>
+    </div>
+    <div class="record">
+      <div class="rec-row">
+        <div class="rec-when">2023 — PRESENT</div>
+        <div>
+          <h3>Operations Manager — SAI Vision Services Ltd</h3>
+          <p>Daily operations, logistics and service coordination for corporate and VIP clients. Supervising teams, handling procurement, maintaining 24/7 operational readiness.</p>
+        </div>
+      </div>
+      <div class="rec-row">
+        <div class="rec-when">2023 — PRESENT</div>
+        <div>
+          <h3>Founder &amp; Director — AKB Contracting</h3>
+          <p>Built and run my own contracting operation: subcontracting teams for plumbing, electrical and technical installations, plus vendor sourcing and budget planning for B2B projects.</p>
+        </div>
+      </div>
+      <div class="rec-row">
+        <div class="rec-when">2025 — 2026</div>
+        <div>
+          <h3>Night Auditor — RIU Hotels &amp; Resorts, Le Morne</h3>
+          <p>Nightly financial reconciliation, billing verification and audit reporting — precision work, done alone, under deadline, every single night.</p>
+        </div>
+      </div>
+      <div class="rec-row">
+        <div class="rec-when">2021 — 2023</div>
+        <div>
+          <h3>IT &amp; Design Support — Ministry of Finance</h3>
+          <p>IT and graphic design support across three government ministries; internal communications and software troubleshooting.</p>
+        </div>
+      </div>
+      <div class="rec-when" style="padding-top:20px">Full CV available on request — already in your inbox at hharel@palco.mu.</div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact reveal" id="contact">
+    <div class="contact-card">
+      <div>
+        <span class="mono" style="display:block;margin-bottom:14px;color:var(--orange)">Next step</span>
+        <h2>Let's talk about your sites.</h2>
+        <p>One call is enough to know if I'm the right fit. I'm based in Rose Hill and available for an interview at your convenience.</p>
+      </div>
+      <div class="contact-links">
+        <a href="tel:+23057086197"><span>+230 5708 6197</span><span class="arrow">→</span></a>
+        <a href="mailto:khodabacchus.adil@gmail.com"><span>khodabacchus.adil@gmail.com</span><span class="arrow">→</span></a>
+        <a href="https://adil-khb.github.io/portfolio" target="_blank" rel="noopener"><span>Technical portfolio</span><span class="arrow">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span class="mono">Designed &amp; built by Adil Khodabacchus — for this application</span>
+    <span class="mono">Rose Hill, Mauritius</span>
+  </footer>
+</div>
+
+<script>
+  // ---- layer stack interaction ----
+  const layerData = {
+    finish: {
+      tag: "Top layer · What people see first",
+      color: "orange",
+      title: "Finish — Innovation & IT",
+      body: "A BSc (Hons) in Software Engineering means I don't just use digital tools — I build them. Reporting dashboards, automated invoicing systems, live project trackers. Site paperwork that reaches the Manager the same day, not next week. This website is a small sample: I made it specifically for this application.",
+      list: [
+        "<strong>Built and deployed</strong> an invoice management web app currently in use in operations",
+        "<strong>Advanced Excel</strong> — costing sheets, comparison analyses, commercial pricing models",
+        "<strong>Digital-first reporting</strong> — photos, updates and daily logs, structured and on time"
+      ]
+    },
+    membrane: {
+      tag: "The layer that protects everything underneath",
+      color: "membrane",
+      title: "Membrane — Leadership",
+      body: "A waterproofing membrane doesn't get seen — but when it's missing, everything fails. Leadership works the same way. I keep crews motivated, clients reassured and problems contained before they spread. Multiple teams, different trades, one standard.",
+      list: [
+        "<strong>Supervising mixed-trade teams</strong> — plumbing, electrical, lifts, installations",
+        "<strong>Client-facing under pressure</strong> — VIP and corporate accounts, last-minute changes handled calmly",
+        "<strong>Hands-on by nature</strong> — I lead from the site, not from a desk"
+      ]
+    },
+    screed: {
+      tag: "The layer that keeps everything level",
+      color: "grey",
+      title: "Screed — Logistics",
+      body: "A floor is only as good as how level its screed is. Logistics is my levelling layer: crews in the right place, material on site before the team arrives, vehicles routed, vendors chased. When transport runs on time, everything above it does too.",
+      list: [
+        "<strong>Daily transport &amp; crew coordination</strong> across multiple simultaneous sites",
+        "<strong>Valid driving licence</strong> + MITD-certified forklift operator",
+        "<strong>Procurement &amp; vendor sourcing</strong> with budget accountability"
+      ]
+    },
+    substrate: {
+      tag: "Load-bearing · Everything rests on it",
+      color: "ink",
+      title: "Substrate — Discipline",
+      body: "The substrate carries the whole system. Mine is discipline: audit-grade accuracy, confidentiality, documentation that holds up to scrutiny. Six months of overnight financial auditing at an international hotel chain taught me that details are not optional.",
+      list: [
+        "<strong>Financial reconciliation</strong> and discrepancy reporting at RIU Hotels &amp; Resorts",
+        "<strong>Reports &amp; documentation</strong> maintained as a habit, not an afterthought",
+        "<strong>Confidential information handling</strong> — certified track record in regulated environments"
+      ]
+    }
+  };
+
+  const tabs = document.querySelectorAll('.layer');
+  const detail = document.getElementById('layerDetail');
+  const ldTag = document.getElementById('ldTag');
+  const ldTitle = document.getElementById('ldTitle');
+  const ldBody = document.getElementById('ldBody');
+  const ldList = document.getElementById('ldList');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.setAttribute('aria-selected', 'false'));
+      tab.setAttribute('aria-selected', 'true');
+      const d = layerData[tab.dataset.key];
+      detail.dataset.color = d.color;
+      ldTag.textContent = d.tag;
+      ldTitle.innerHTML = d.title;
+      ldBody.innerHTML = d.body;
+      ldList.innerHTML = d.list.map(i => `<li>${i}</li>`).join('');
+    });
+  });
+
+  // ---- scroll reveal ----
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
